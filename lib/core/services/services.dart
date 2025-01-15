@@ -6,9 +6,8 @@ import 'package:dio/dio.dart';
 class UserServices {
   final endPoint = ("https://jsonplaceholder.typicode.com/users");
   List<User> users = [];
-
+  final dio = Dio();
   Future<List<User>> getUsersData() async {
-    final dio = Dio();
     try {
       var response = await dio.get(endPoint);
       var data = response.data;
@@ -26,10 +25,9 @@ class UserServices {
   }
 
   postUserData(User user) async {
-    final dio = Dio();
     try {
       var response = await dio.post(
-          "https://jsonplaceholder.typicode.com/users",
+          endPoint,
           data: User(
                   id: user.id,
                   name: user.name,
@@ -47,7 +45,6 @@ class UserServices {
   }
 
   deleteUserData(int id) async {
-    final dio = Dio();
     try {
       await dio.delete('$endPoint/$id');
       print("user has been deleted successfully");

@@ -180,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     controller: Constants.addressController,
                     decoration: InputDecoration(
                         prefixIconColor: Constants.mainColor,
-                        prefixIcon: Icon(Icons.location_city),
+                        prefixIcon: Icon(Icons.streetview_outlined),
                         hintText: "address",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
@@ -193,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     controller: Constants.companyController,
                     decoration: InputDecoration(
                         prefixIconColor: Constants.mainColor,
-                        prefixIcon: Icon(Icons.location_city),
+                        prefixIcon: Icon(Icons.apartment),
                         hintText: "company",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
@@ -223,28 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     textColor: Colors.white,
                     onPressed: () {
                       if (buttonText == "Add User") {
-                        UserServices().postUserData(User(id: 1,
-                            name: Constants.nameController.text,
-                            username: Constants.userNameController.text,
-                            email: Constants.emailController.text,
-                            address: Address(street: Constants.addressController
-                                .text,
-                                suite: '',
-                                city: 'city',
-                                zipcode: "zipcode",
-                                geo: Geo(lat: 'lat', lng: 'lng')),
-                            phone: Constants.phoneController.text,
-                            website: Constants.websiteController.text,
-                            company: Company(name: Constants.companyController
-                                .text, catchPhrase: 'catchPhrase', bs: 'bs')));
-                        Navigator.pop(context);
-                        SnackBar snackBar = SnackBar(
-                          content: Text('${Constants.nameController
-                              .text} added successfully'),
-                          action: SnackBarAction(
-                            onPressed: () {}, label: 'OK',),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        addUser(context);
                       }
                     },
                     child: Text(
@@ -258,5 +237,29 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         });
   }
+  addUser(BuildContext context){
+      UserServices().postUserData(User(id: 1,
+          name: Constants.nameController.text,
+          username: Constants.userNameController.text,
+          email: Constants.emailController.text,
+          address: Address(street: Constants.addressController
+              .text,
+              suite: '',
+              city: 'city',
+              zipcode: "zipcode",
+              geo: Geo(lat: 'lat', lng: 'lng')),
+          phone: Constants.phoneController.text,
+          website: Constants.websiteController.text,
+          company: Company(name: Constants.companyController
+              .text, catchPhrase: 'catchPhrase', bs: 'bs')));
+      Navigator.pop(context);
+      SnackBar snackBar = SnackBar(
+        content: Text('${Constants.nameController
+            .text} added successfully'),
+        action: SnackBarAction(
+          onPressed: () {}, label: 'OK',),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
 
-}
