@@ -27,9 +27,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     getUsers();
   }
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,8 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         trailing: IconButton(
                           onPressed: () {
-                            emailController.text = users[index].email;
-                            nameController.text = users[index].username;
+                            Constants.emailController.text = users[index].email;
+                            Constants.nameController.text = users[index].name;
+                            Constants.phoneController.text = users[index].phone;
+                            Constants.addressController.text = users[index].address.street;
+                            Constants.companyController.text = users[index].company.name;
+                            Constants.websiteController.text = users[index].website;
+                            Constants.userNameController.text = users[index].username;
+
                             showBottomSheet(
                               "Edit User",
                             );
@@ -86,8 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          nameController.text = "";
-          emailController.text = "";
+          Constants.userNameController.text ="";
+          Constants.nameController.text ="";
+          Constants.phoneController.text ="";
+          Constants.addressController.text ="";
+          Constants.companyController.text ="";
+          Constants.websiteController.text ="";
+          Constants.emailController.text ="";
+
           showBottomSheet("Add User");
         },
         child: Icon(Icons.add),
@@ -114,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.7,
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -130,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   SizedBox(height: 30),
                   TextFormField(
-                    controller: emailController,
+                    controller: Constants.emailController,
                     decoration: InputDecoration(
                         prefixIcon: Icon(Icons.email),
                         prefixIconColor: Constants.mainColor,
@@ -142,11 +151,63 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 10,
                   ),
                   TextFormField(
-                    controller: nameController,
+                    controller: Constants.nameController,
                     decoration: InputDecoration(
                         prefixIconColor: Constants.mainColor,
                         prefixIcon: Icon(Icons.person),
                         hintText: "Username",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: Constants.phoneController,
+                    decoration: InputDecoration(
+                        prefixIconColor: Constants.mainColor,
+                        prefixIcon: Icon(Icons.phone),
+                        hintText: "phone",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: Constants.addressController,
+                    decoration: InputDecoration(
+                        prefixIconColor: Constants.mainColor,
+                        prefixIcon: Icon(Icons.location_city),
+                        hintText: "address",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: Constants.companyController,
+                    decoration: InputDecoration(
+                        prefixIconColor: Constants.mainColor,
+                        prefixIcon: Icon(Icons.location_city),
+                        hintText: "company",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: Constants.websiteController,
+                    decoration: InputDecoration(
+                        prefixIconColor: Constants.mainColor,
+                        prefixIcon: Icon(Icons.web),
+                        hintText: "website",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10))),
                   ),
@@ -160,7 +221,32 @@ class _MyHomePageState extends State<MyHomePage> {
                     minWidth: double.infinity,
                     color: Constants.mainColor,
                     textColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      if (buttonText == "Add User") {
+                        UserServices().postUserData(User(id: 1,
+                            name: Constants.nameController.text,
+                            username: Constants.userNameController.text,
+                            email: Constants.emailController.text,
+                            address: Address(street: Constants.addressController
+                                .text,
+                                suite: '',
+                                city: 'city',
+                                zipcode: "zipcode",
+                                geo: Geo(lat: 'lat', lng: 'lng')),
+                            phone: Constants.phoneController.text,
+                            website: Constants.websiteController.text,
+                            company: Company(name: Constants.companyController
+                                .text, catchPhrase: 'catchPhrase', bs: 'bs')));
+                        Navigator.pop(context);
+                        SnackBar snackBar = SnackBar(
+                          content: Text('${Constants.nameController
+                              .text} added successfully'),
+                          action: SnackBarAction(
+                            onPressed: () {}, label: 'OK',),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    },
                     child: Text(
                       buttonText,
                       style: TextStyle(fontSize: 18),
@@ -172,4 +258,5 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         });
   }
+
 }

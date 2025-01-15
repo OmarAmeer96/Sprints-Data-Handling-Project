@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 class UserServices {
   final endPoint = ("https://jsonplaceholder.typicode.com/users");
   List<User> users = [];
+
   Future<List<User>> getUsersData() async {
     final dio = Dio();
     try {
@@ -23,4 +24,23 @@ class UserServices {
     }
     return users;
   }
+
+  postUserData(User user) async {
+    final dio = Dio();
+    try {
+      var response = await dio.post("https://jsonplaceholder.typicode.com/users",
+          data: User(id: user.id,
+          name: user.name,
+          phone: user.phone,
+          address: user.address,
+          company: user.company,
+          email: user.email,
+          username: user.username,
+          website: user.website).toJson());
+      print("user created successfully");
+    } catch (e) {
+      print('Error occurred while posting user: $e');
+    }
+  }
+
 }
