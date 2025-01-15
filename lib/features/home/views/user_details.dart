@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sprints_data_handling_project/features/home/models/user_model.dart';
+import 'package:sprints_data_handling_project/features/home/widgets/delete_confirm_dialog.dart';
 import 'package:sprints_data_handling_project/features/home/widgets/user_detail_item.dart';
 
 import '../../../data/constants/constants.dart';
@@ -100,7 +101,9 @@ class _UserDetailsState extends State<UserDetails> {
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.white,
         backgroundColor: Colors.red,
-        onPressed: () {},
+        onPressed: () {
+          deleteConfirmDialog(context, users[widget.index].id);
+        },
         child: Icon(Icons.delete),
       ),
     );

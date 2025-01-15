@@ -28,19 +28,31 @@ class UserServices {
   postUserData(User user) async {
     final dio = Dio();
     try {
-      var response = await dio.post("https://jsonplaceholder.typicode.com/users",
-          data: User(id: user.id,
-          name: user.name,
-          phone: user.phone,
-          address: user.address,
-          company: user.company,
-          email: user.email,
-          username: user.username,
-          website: user.website).toJson());
+      var response = await dio.post(
+          "https://jsonplaceholder.typicode.com/users",
+          data: User(
+                  id: user.id,
+                  name: user.name,
+                  phone: user.phone,
+                  address: user.address,
+                  company: user.company,
+                  email: user.email,
+                  username: user.username,
+                  website: user.website)
+              .toJson());
       print("user created successfully");
     } catch (e) {
       print('Error occurred while posting user: $e');
     }
   }
 
+  deleteUserData(int id) async {
+    final dio = Dio();
+    try {
+      await dio.delete('$endPoint/$id');
+      print("user has been deleted successfully");
+    } catch (e) {
+      print(e);
+    }
+  }
 }
