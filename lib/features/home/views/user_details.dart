@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sprints_data_handling_project/features/home/models/user_model.dart';
@@ -59,10 +60,19 @@ class _UserDetailsState extends State<UserDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage: NetworkImage(
-                        'https://images.pexels.com/photos/556669/pexels-photo-556669.jpeg?auto=compress&cs=tinysrgb&w=600'),
+                  Hero(
+                    tag: users[widget.index].id,
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: Constants.userProfilePicture,
+                        placeholder: (context, url) => Center(
+                          child: const CircularProgressIndicator(),
+                        ),
+                        width: 120,
+                        height: 120,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 4),

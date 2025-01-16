@@ -24,20 +24,38 @@ class UserServices {
     return users;
   }
 
+  updateUser(User user) async {
+    try {
+      await dio.put('$endPoint/${user.id}',
+          data: User(
+            id: user.id,
+            name: user.name,
+            phone: user.phone,
+            address: user.address,
+            company: user.company,
+            email: user.email,
+            username: user.username,
+            website: user.website,
+          ).toJson());
+      print("User updated successfully");
+    } catch (e) {
+      print(e);
+    }
+  }
+
   postUserData(User user) async {
     try {
-      var response = await dio.post(
-          endPoint,
+      var response = await dio.post(endPoint,
           data: User(
-                  id: user.id,
-                  name: user.name,
-                  phone: user.phone,
-                  address: user.address,
-                  company: user.company,
-                  email: user.email,
-                  username: user.username,
-                  website: user.website)
-              .toJson());
+            id: user.id,
+            name: user.name,
+            phone: user.phone,
+            address: user.address,
+            company: user.company,
+            email: user.email,
+            username: user.username,
+            website: user.website,
+          ).toJson());
       print("user created successfully");
     } catch (e) {
       print('Error occurred while posting user: $e');
