@@ -5,7 +5,7 @@ import 'package:sprints_data_handling_project/core/services/services.dart';
 import 'package:sprints_data_handling_project/data/constants/constants.dart';
 import 'package:sprints_data_handling_project/features/home/models/user_model.dart';
 import 'package:sprints_data_handling_project/features/home/views/user_details.dart';
-import 'package:sprints_data_handling_project/features/team_members/views/team_member_view.dart';
+import 'package:sprints_data_handling_project/features/team_members/views/team_members_view.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
-                  return const TeamMemberView();
+                  return const TeamMembersView();
                 },
               ));
             },
@@ -352,26 +352,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void updateUser(BuildContext context) {
-    UserServices().updateUser(User(
-      id: 1,
-      name: Constants.nameController.text,
-      username: Constants.userNameController.text,
-      email: Constants.emailController.text,
-      address: Address(
-        street: Constants.addressController.text,
-        suite: '',
-        city: 'city',
-        zipcode: "zipcode",
-        geo: Geo(lat: 'lat', lng: 'lng'),
+    UserServices().updateUser(
+      User(
+        id: 1,
+        name: Constants.nameController.text,
+        username: Constants.userNameController.text,
+        email: Constants.emailController.text,
+        address: Address(
+          street: Constants.addressController.text,
+          suite: '',
+          city: 'city',
+          zipcode: "zipcode",
+          geo: Geo(lat: 'lat', lng: 'lng'),
+        ),
+        phone: Constants.phoneController.text,
+        website: Constants.websiteController.text,
+        company: Company(
+          name: Constants.companyController.text,
+          catchPhrase: 'catchPhrase',
+          bs: 'bs',
+        ),
       ),
-      phone: Constants.phoneController.text,
-      website: Constants.websiteController.text,
-      company: Company(
-        name: Constants.companyController.text,
-        catchPhrase: 'catchPhrase',
-        bs: 'bs',
-      ),
-    ));
+    );
     Navigator.pop(context);
     SnackBar snackBar = SnackBar(
       content: Text('${Constants.nameController.text} updated successfully'),

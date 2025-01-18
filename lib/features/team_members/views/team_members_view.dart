@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sprints_data_handling_project/data/constants/constants.dart';
 import 'package:sprints_data_handling_project/features/team_members/views/widgets/team_members_column.dart';
 
-class TeamMemberView extends StatelessWidget {
-  const TeamMemberView({super.key});
+class TeamMembersView extends StatelessWidget {
+  const TeamMembersView({super.key});
 
   @override
   Widget build(BuildContext context) {
